@@ -8,14 +8,17 @@ import pytest
 from unittest.mock import Mock
 from src.controllers.usercontroller import UserController
 
+@pytest.mark.unit
 #This test verifies that if you use an invalid user email, it raises a ValueError.
 def test_email_format_invalid():
     dao = Mock()
+ 
     ctrl = UserController(dao)
 
     with pytest.raises(ValueError):
         ctrl.get_user_by_email("not-an-email")
 
+@pytest.mark.unit
 #This test verifies that if you use an email that doesn't exist, it returns None.
 def test_no_user_found():
     dao = Mock()
@@ -24,6 +27,7 @@ def test_no_user_found():
 
     assert ctrl.get_user_by_email("a@b.com") is None
 
+@pytest.mark.unit
 #This is a normal verification test, testing that if you enter your email correctly.
 def test_single_user_returned():
     dao = Mock()
@@ -34,6 +38,7 @@ def test_single_user_returned():
     result = ctrl.get_user_by_email("a@b.com")
     assert result == expected
 
+@pytest.mark.unit
 #This is testing if there are multiple users with the same email in the database both a warning is raised and the first
 # user is returned
 def test_multiple_users(capsys):
@@ -47,6 +52,7 @@ def test_multiple_users(capsys):
     captured = capsys.readouterr()
     assert ("more than one user found with mail a@b.com" in captured.out and result == user1)
 
+@pytest.mark.unit
 #This is testing if the database throws an exception
 def test_dao_exception():
     dao = Mock()

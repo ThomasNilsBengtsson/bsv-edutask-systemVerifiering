@@ -74,7 +74,10 @@ describe('Todo Item Creation', () => {
     const addButtonSelector = '.inline-form input[type="submit"]';
     cy.get(addButtonSelector).click();
     cy.contains('li.todo-item', todoDescription).should('be.visible');
+
   });
+
+
   
   it('button should be disabled when no text is entered', () => {
     cy.createTodoItem();
